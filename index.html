@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html class="no-js">
+<!--<![endif]-->
+<html lang="en" class="no-js">
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>航班信息查询</title>
+	<meta name="description" content="" />
+	<meta name="keywords" content="" />
+	<meta name="author" content="" />
+
+	<script src="js/modernizr.custom.js"></script>
+	<link href="css/bootstrap.min.css" rel="stylesheet">
+	<link href="css/jquery.fancybox.css" rel="stylesheet">
+	<link href="css/flickity.css" rel="stylesheet">
+	<link href="css/animate.css" rel="stylesheet">
+
+	<link href="css/styles.css" rel="stylesheet">
+	<link href="css/queries.css" rel="stylesheet">
+</head>
+
+<body>
+	<header id="main">
+		<section class="hero">
+			<div class="container">
+				<div class="row nav-wrapper">
+					<div class="col-md-6 col-sm-6 col-xs-6 text-left" style="font-size: 20px">
+					</div>
+
+				</div>
+				<div class="row hero-content">
+					<div class="col-md-12 text-center">
+						<h1 class="animated fadeInDown">让世界更准点</h1>
+						<h2 class="animated fadeInDown">基于星云链大数据提供可靠的航班数据服务</h2>
+						
+					</div>
+				</div>
+			</div>
+		</section>
+	</header>
+	
+	
+	
+	<section id="query" class="aboutUs page-section" >
+		<div class="aboutUs-wrap">
+			<div class="title-section text-center wp2">
+				<h2>航班信息查询</h2>
+				<br>
+			</div>
+			<div class="container">
+				<div class="row">
+					<input type="text" name="name" id="search_value" required="required" class="form wp2" placeholder="CA111">
+					<div class="relative fullwidth col-xs-12">
+						<!-- Send Button -->
+						<button id="search" name="submit" class="form-btn semibold wp2">查询</button>
+					</div>
+				</div>
+				<div class="row" id="app">
+					<table id="tableList" class="table table-bordered" style="display:none;color: #fff;margin-top: 30px">
+						<thead>
+							<tr>
+								<th>航班信息</th>
+								<th>起飞城市-到达城市</th>
+								<th>起飞时间-落地时间</th>
+								<th>准点率</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr v-for="l in list">
+								<td v-html="l.link"></td>
+								<td v-html="l.value"></td>
+								<td v-html="l.serverNo"></td>
+								<td v-html="l.date"></td>
+							</tr>
+							
+						</tbody>
+						
+					</table>
+					<div id="feedback" class="title-section text-center wp2" style="display:none;">
+							<br>
+							<h2>我要反馈</h2>
+					</div>
+					
+					<button id="iamontime"  onClick="beontime()" class="form-btn semibold wp2" style="display:none;">我的航班准点到达</button>
+					<br>
+					<button id="iamonlate"  onClick="belate()" class="form-btn semibold wp2" style="display:none;">我的航班延误了</button>
+			</div>
+		</div>
+	</section>
+
+	<section id="contact" class="container page-section">
+		<!-- Contact Inner -->
+		<div class="inner contact wp2 delay-05s">
+			<div class="title-section text-center">
+				<h2>新航班录入</h2>
+				<div class="divider">
+					<i class="fa fa-star-o fa-lg"></i>
+				</div>
+			</div>
+			<!-- Form Area -->
+			<div class="contact-form">
+				<!-- Form -->
+				<!-- Left Inputs -->
+				<div class="col-xs-6 animated fadeInLeft visible" data-animation="fadeInLeft" data-animation-delay="300">
+					<input type="text" id="flightid" class="form" placeholder="航班编号">
+					<input type="text" id="upaddr" class="form" placeholder="起飞城市">
+					<input type="text" id="uptime" class="form" placeholder="起飞时间">
+				</div>
+				<!-- End Left Inputs -->
+				
+				
+				<!-- Right Inputs -->
+				<div class="col-xs-6 animated fadeInRight visible" data-animation="fadeInRight" data-animation-delay="400">
+					<input type="text" id="flightname" class="form" placeholder="航班名称">
+					<input type="text" id="downaddr" class="form" placeholder="落地城市">
+					<input type="text" id="downtime" class="form" placeholder="落地时间">
+				</div>
+				<!-- End Right Inputs -->
+				
+				
+				<!-- Bottom Submit -->
+				<div class="relative fullwidth col-xs-12">
+					<!-- Send Button -->
+					<button id="push" name="submit" class="form-btn semibold" >提交</button>
+				</div>
+				<!-- End Bottom Submit -->
+				<!-- Clear -->
+				<div class="clear"></div>
+			</div>
+			<!-- End Contact Form Area -->
+		</div>
+		<!-- End Inner -->
+	</section>
+
+	<section class="services-list page-section" id="features">
+		<div class="container">
+			<div class="row">
+				<div class="title-section text-center">
+					<h2>产品介绍</h2>
+					<div class="divider">
+						<i class="fa fa-star-o fa-lg"></i>
+					</div>
+				</div>
+				<div class="disc-section text-center">
+					<p>基于新一代区块链公链星云链，适用大数据给客户提供准确的航班查询服务</p>
+				</div>
+				<div class="col-md-12">
+
+					<div class="col-md-4 feature-1 wp2">
+						<div class="feature-icon">
+							<img src="img/3gn.png" >
+						</div>
+						<div class="feature-content">
+							<h1>航班动态查询</h1>
+							<p>提供准确可靠的航班起降、延误、取消等实时动态信息查询</p>
+						</div>
+					</div>
+					<div class="col-md-4 feature-2 wp2 delay-05s">
+						<div class="feature-icon">
+							<img src="img/1gn.png" >
+						</div>
+						<div class="feature-content">
+							<h1>精准预测起降时间</h1>
+							<p>精准预测航班起降时间，查询航班历史准点率情况</p>
+						</div>
+					</div>
+					<div class="col-md-4 feature-3 wp2 delay-1s">
+						<div class="feature-icon">
+							<img src="img/2gn.png" >
+						</div>
+						<div class="feature-content">
+							<h1>不可篡改</h1>
+							<p>基于新一代区块链公链星云链，保证数据可靠性</p>
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</section>
+	
+	
+	<footer id="footer" class="footer">
+		<section id="site-socials" class="no-padding white-bg">
+			<div class="site-socials inner no-padding">
+
+				<div class="address socials animated fadeInRight visible" data-animation="fadeInRight" data-animation-delay="500">
+					<p>作者联系方式  heresgabor@gmail.com
+						<a href="https://nebulas.io/" target="_blank">星云平台</a>
+					</p>
+
+				</div>
+			</div>
+		</section>
+	</footer>
+	<script src=js/nebPay.js></script>
+	<script src="js/toucheffects.js"></script>
+	<script src="js/jquery.min.js"></script>
+	<script src="js/flickity.pkgd.min.js"></script>
+	<script src="js/jquery.fancybox.pack.js"></script>
+	<script src="js/waypoints.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	<script src="js/scripts.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+	<script src=js/nebulas.js></script>
+	<script src="js/layer/layer.js" type="text/javascript" charset="utf-8"></script>
+	<script>
+	
+		var dappAddress = "n1wGPyfFjWp8CeSfke1ni6sMaQ1icWNcf2J";
+
+		var nebulas = require("nebulas"),
+		Account = nebulas.Account,
+		neb = new nebulas.Neb();
+		neb.setRequest(new nebulas.HttpRequest("https://mainnet.nebulas.io"));
+		var NebPay = require("nebpay");
+		var nebPay = new NebPay();
+		var serialNumber;
+		var intervalQuery;
+		
+		
+		
+		
+			var NebPay = require("nebpay");
+			var nebPay = new NebPay();
+
+			setTimeout(function () {
+				if (typeof (webExtensionWallet) === "undefined") {
+					//alert ("扩展钱包未安装，请先安装.")
+				}
+			}, 500);
+
+
+
+
+
+			$("#push").click(function () {
+				var flightid = $('#flightid').val();
+				var flightname = $('#flightname').val();
+				var addr = $('#upaddr').val() + '-' + $('#downaddr').val(); 
+				var time = $('#uptime').val() + '-' + $('#downtime').val();
+				if (flightid == '') {
+					layer.msg('航班编号不能为空');
+					return;
+				}
+				var to = dappAddress;
+				var value = "0";
+				var callFunction = "saveflight"
+				var callArgs = "[\"" + flightid + "\",\"" + flightname + "\",\"" + addr + "\",\"" + time  + "\"]";
+
+				serialNumber = nebPay.call(to, value, callFunction, callArgs, {
+					listener: cbInfoPush
+				});
+			});
+
+			function searchflight(){
+				var from = Account.NewAccount().getAddressString();
+				var value = "0";
+				var nonce = "0";
+				var gas_price = "1000000";
+				var gas_limit = "2000000";
+				
+				var search_value = $("#search_value").val();
+				if (search_value == '') {
+					search_value='CA111'
+				}
+				
+				var callFunction = "getflight";
+				var callArgs = "[\""+ search_value +"\"]";
+				
+				var contract = {
+				  "function":callFunction,
+				  "args":callArgs
+				}
+				layer.msg('开始查询,请稍后...');
+				neb.api.call(from,dappAddress,value,nonce,gas_price,gas_limit,contract).then(
+					function(resp){
+
+						var result = resp.result;
+						
+						console.log("------------------" +result);
+						if (result === 'null' || result.length < 3) {
+							$('#tableList').hide();
+							$('#feedback').hide();
+							$('#iamontime').hide();
+							$('#iamonlate').hide();
+							layer.msg('没有查到航班信息');
+						} else {
+							$('#tableList').show();
+							$('#feedback').show();
+							$('#iamontime').show();
+							$('#iamonlate').show();
+							var resultObj = JSON.parse(result);
+							var ontimeper = 0;
+							
+							if(resultObj.name == ''){
+								resultObj.name = resultObj.key;
+							}
+
+							var total = parseFloat(resultObj.ontime +  resultObj.latetime);
+
+							var ontime  = parseFloat(resultObj.ontime);
+							var total = parseFloat(total);
+							if (isNaN(resultObj.ontime) || isNaN(resultObj.latetime) || total === 0) { 
+								ontimeper = "暂未有人提交"
+							} else{
+								ontimeper = Math.round(ontime / total * 10000) / 100.00 + "%";
+							}
+							var obj = [];
+
+							var temp = {
+								link: resultObj.name,
+								value: resultObj.city,
+								serverNo: resultObj.time,
+								date: ontimeper,
+							}
+							obj.push(temp);
+
+							Vue.set(app, 'list', obj);
+						}
+
+				}).catch(function(err){
+					console.log("error:"+err.message);
+					layer.msg('无法查到记录！');
+				})
+			}
+			
+			
+			$("#search").click(function () {
+				searchflight();
+			})
+			
+			var intervalQuery;
+			function cbPush(resp) {
+				console.log("response of push: " + resp)
+				if(typeof resp == 'string'){
+					layer.msg("取消提交");
+			   }else{
+					var txhash = resp.txhash;
+					console.log("txhash: ", txhash);
+					
+					intervalQuery = setInterval(function(){
+						doIntervalQuery(txhash);
+					},5000);
+					
+				}
+			}
+			
+
+			
+			
+			function doIntervalQuery(txhash) {
+				neb.api.getTransactionReceipt(txhash).then(function (resp) {
+					if(resp.status == 0) {
+						console.log("failed ", resp);
+						clearInterval(intervalQuery);
+					} else if(resp.status == 1) {
+						// success
+						console.log("success ", resp);
+						clearInterval(intervalQuery);
+						//getWallectInfo();
+						searchflight();
+						layer.msg("提交成功");
+
+					} else {
+						// waiting
+						console.log("查询中...")
+					}
+				});
+			}
+			
+			
+			function cbInfoPush(resp) {
+				console.log("response of push: " + resp)
+				if(typeof resp == 'string'){
+					layer.msg("取消提交");
+			   }else{
+					var txhash = resp.txhash;
+					console.log("txhash: ", txhash);
+					
+					intervalQuery = setInterval(function(){
+						doIntervalQuery2(txhash);
+					},5000);
+					
+				}
+			}
+			
+			function doIntervalQuery2(txhash) {
+				neb.api.getTransactionReceipt(txhash).then(function (resp) {
+					if(resp.status == 0) {
+						console.log("failed ", resp);
+						clearInterval(intervalQuery);
+					} else if(resp.status == 1) {
+						// success
+						console.log("success ", resp);
+						clearInterval(intervalQuery);
+						layer.msg("提交成功");
+
+					} else {
+						// waiting
+						console.log("查询中...")
+					}
+				});
+			}
+			
+			
+			
+			function beontime(){
+				var flightid = $("#search_value").val();
+				if (flightid == '') {
+					flightid='CA111'
+				}
+				var to = dappAddress;
+				var value = "0";
+				var callFunction = "on"
+				var callArgs = "[\"" + flightid  + "\"]";
+				serialNumber = nebPay.call(to, value, callFunction, callArgs, {
+					listener: cbPush
+				});
+			}
+			
+			
+			function belate() {
+				var flightid = $("#search_value").val();
+				if (flightid == '') {
+					flightid='CA111'
+				}
+				var to = dappAddress;
+				var value = "0";
+				var callFunction = "late"
+				var callArgs = "[\"" + flightid  + "\"]";
+				serialNumber = nebPay.call(to, value, callFunction, callArgs, {
+					listener: cbPush
+				});
+			}
+
+			
+			var app = new Vue({
+				el: '#app',
+				data: {
+					list: []
+				}
+			});
+
+
+
+	</script>
+</body>
+
+</html>
